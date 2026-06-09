@@ -747,13 +747,12 @@ Make meals flow intelligently — leftovers become new dishes. Keep it creative 
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4000,
-        messages: [{ role: "user", content: prompt }]
-      })
-    });
+     headers: {
+  "Content-Type": "application/json",
+  "x-api-key": "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",
+  "anthropic-version": "2023-06-01",
+  "anthropic-dangerous-direct-browser-access": "true"
+},
     const data = await res.json();
     const text = data.content.map(b => b.text||'').join('').trim().replace(/```json|```/g,'').trim();
     const parsed = JSON.parse(text);
@@ -838,14 +837,12 @@ async function sendChat() {
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 600,
-        system: context,
-        messages: chatHistory
-      })
-    });
+     headers: {
+  "Content-Type": "application/json",
+  "x-api-key": "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",
+  "anthropic-version": "2023-06-01",
+  "anthropic-dangerous-direct-browser-access": "true"
+},
     const data = await res.json();
     const reply = data.content.map(b=>b.text||'').join('').trim();
     removeTyping(typingId);
