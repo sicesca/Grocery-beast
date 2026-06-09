@@ -745,14 +745,11 @@ owned=true means it's in their pantry already (from the stocked list).
 Make meals flow intelligently — leftovers become new dishes. Keep it creative and specific.`;
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-     headers: {
-  "Content-Type": "application/json",
-  "x-api-key": "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",
-  "anthropic-version": "2023-06-01",
-  "anthropic-dangerous-direct-browser-access": "true"
-},
+  const res = await fetch("/.netlify/functions/claude", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
     const data = await res.json();
     const text = data.content.map(b => b.text||'').join('').trim().replace(/```json|```/g,'').trim();
     const parsed = JSON.parse(text);
@@ -835,14 +832,11 @@ async function sendChat() {
   const context = `You are Mise, an expert chef and nutritionist. The user has these household profiles: ${state.profiles.map(p=>`${p.name} (${p.cals} cal/day, ${p.goal})`).join(', ')}. Their pantry staples include: ${state.pantry.slice(0,15).join(', ')}. Their cuisine preferences: ${state.selectedCuisines.join(', ')}. Weekly budget: $${state.budget}. Be helpful, specific, and creative. Keep responses concise and practical for mobile reading.`;
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-     headers: {
-  "Content-Type": "application/json",
-  "x-api-key": "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",
-  "anthropic-version": "2023-06-01",
-  "anthropic-dangerous-direct-browser-access": "true"
-},
+   const res = await fetch("/.netlify/functions/claude", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
     const data = await res.json();
     const reply = data.content.map(b=>b.text||'').join('').trim();
     removeTyping(typingId);
