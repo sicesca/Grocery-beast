@@ -746,10 +746,12 @@ Make meals flow intelligently — leftovers become new dishes. Keep it creative 
 
   try {
   const res = await fetch("/.netlify/functions/claude", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 4000, messages: [{ role: "user", content: prompt }] })
+  });
     const data = await res.json();
     const text = data.content.map(b => b.text||'').join('').trim().replace(/```json|```/g,'').trim();
     const parsed = JSON.parse(text);
@@ -832,11 +834,13 @@ async function sendChat() {
   const context = `You are Mise, an expert chef and nutritionist. The user has these household profiles: ${state.profiles.map(p=>`${p.name} (${p.cals} cal/day, ${p.goal})`).join(', ')}. Their pantry staples include: ${state.pantry.slice(0,15).join(', ')}. Their cuisine preferences: ${state.selectedCuisines.join(', ')}. Weekly budget: $${state.budget}. Be helpful, specific, and creative. Keep responses concise and practical for mobile reading.`;
 
   try {
-   const res = await fetch("/.netlify/functions/claude", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  const res = await fetch("/.netlify/functions/claude", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 600, system: context, messages: chatHistory })
+  });
     const data = await res.json();
     const reply = data.content.map(b=>b.text||'').join('').trim();
     removeTyping(typingId);
